@@ -1,166 +1,247 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { Button, Image, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Dimensions,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { Colors } from "../constants/theme";
 
-/* COMPONENTE BADGE */
-function Badge({ texto }) {
-  return (
-    <View style={styles.badge}>
-      <Text style={styles.badgeText}>{texto}</Text>
-    </View>
-  );
-}
-
-/* COMPONENTE TARJETA */
-function Tarjeta({ titulo, descripcion }) {
-  return (
-    <View style={styles.card}>
-      <Text style={styles.cardTitle}>{titulo}</Text>
-      <Text>{descripcion}</Text>
-    </View>
-  );
-}
-
-/* COMPONENTE CAMPO */
-function Campo({ placeholder }) {
-  return (
-    <TextInput
-      style={styles.input}
-      placeholder={placeholder}
-    />
-  );
-}
-
-export default function App() {
-
-  const [estado, setEstado] = useState("Disponible");
-
-  const cambiarEstado = () => {
-    setEstado(estado === "Disponible" ? "Ocupado" : "Disponible");
-  };
-
-  return (
-    <ScrollView style={styles.container}>
-
-      {/* IMAGEN */}
-      <Image
-        source={require("./assets/perfil.jpg")}
-        style={styles.image}
-      />
-
-      {/* TITULO Y SUBTITULO */}
-      <Text style={styles.title}>Perfil de Usuario</Text>
-      <Text style={styles.subtitle}>Información básica</Text>
-
-      {/* ESTADO DINÁMICO */}
-      <Text style={styles.estado}>Estado: {estado}</Text>
-      <Button title="Cambiar estado" onPress={cambiarEstado} />
-
-      {/* FORMULARIO */}
-      <Text style={styles.section}>Formulario</Text>
-
-      <Campo placeholder="Nombre" />
-      <Campo placeholder="Apellido" />
-      <Campo placeholder="Correo" />
-
-      {/* TARJETAS */}
-      <Text style={styles.section}>Información</Text>
-
-      <Tarjeta
-        titulo="Experiencia"
-        descripcion="2 años aprendiendo desarrollo móvil."
-      />
-
-      <Tarjeta
-        titulo="Estudios"
-        descripcion="Ingeniería de Sistemas."
-      />
-
-      {/* BADGES */}
-      <Text style={styles.section}>Habilidades</Text>
-
-      <View style={styles.badgeContainer}>
-        <Badge texto="React Native" />
-        <Badge texto="JavaScript" />
-        <Badge texto="Git" />
-      </View>
-
-    </ScrollView>
-  );
-}
-
-/* ESTILOS */
+const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    flex: 1,
+    backgroundColor: Colors.light.background,
   },
 
-  image: {
-    width: 120,
-    height: 120,
-    alignSelf: "center",
-    borderRadius: 60,
-    marginBottom: 15
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    paddingBottom: 30,
   },
 
-  title: {
+  titulo: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: Colors.light.text,
+    marginBottom: 10,
+  },
+
+  subtitulo: {
+    fontSize: 14,
+    color: Colors.light.buttonSecondary,
+  },
+
+  cardPrincipal: {
+    width: width - 32,
+    borderRadius: 20,
+    padding: 24,
+    marginBottom: 20,
+    elevation: 8,
+    marginHorizontal: 16,
+  },
+
+  cardTitulo: {
     fontSize: 24,
     fontWeight: "bold",
-    textAlign: "center"
+    color: "#fff",
+    marginBottom: 12,
   },
 
-  subtitle: {
-    textAlign: "center",
-    marginBottom: 15,
-    color: "gray"
+  cardTexto: {
+    fontSize: 14,
+    color: "#fff",
+    lineHeight: 22,
+    marginBottom: 16,
   },
 
-  estado: {
-    textAlign: "center",
-    marginBottom: 10,
-    fontWeight: "bold"
+  botonSecundario: {
+    backgroundColor: "rgba(255,255,255,0.2)",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignSelf: "flex-start",
+    marginTop: 12,
   },
 
-  section: {
-    marginTop: 20,
-    fontSize: 18,
-    fontWeight: "bold"
-  },
-
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 10,
-    marginTop: 10,
-    borderRadius: 5
-  },
-
-  card: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    padding: 15,
-    marginTop: 10,
-    borderRadius: 8
-  },
-
-  cardTitle: {
+  botonTexto: {
+    color: "#fff",
     fontWeight: "bold",
-    marginBottom: 5
+    fontSize: 14,
   },
 
-  badgeContainer: {
+  gridContainer: {
     flexDirection: "row",
-    marginTop: 10
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    marginBottom: 20,
   },
 
-  badge: {
-    backgroundColor: "#007BFF",
-    padding: 8,
-    borderRadius: 15,
-    marginRight: 8
+  gridCard: {
+    width: (width - 48) / 2,
+    backgroundColor: Colors.light.card,
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 16,
+    elevation: 4,
+    alignItems: "center",
   },
 
-  badgeText: {
-    color: "white"
-  }
+  gridIcon: {
+    fontSize: 40,
+    marginBottom: 12,
+  },
+
+  gridTitulo: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: Colors.light.text,
+    textAlign: "center",
+    marginBottom: 8,
+  },
+
+  gridValor: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: Colors.light.buttonPrimary,
+  },
+
+  estadoButtons: {
+    flexDirection: "row",
+    paddingHorizontal: 16,
+    marginBottom: 20,
+    justifyContent: "space-between",
+  },
+
+  estadoBtn: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: "center",
+    elevation: 3,
+    marginHorizontal: 5,
+  },
+
+  estadoActivo: {
+    backgroundColor: Colors.light.success,
+  },
+
+  estadoInactivo: {
+    backgroundColor: Colors.light.buttonSecondary,
+  },
 });
+
+const GridCard = ({ icon, titulo, valor, color }: { icon: string; titulo: string; valor: string; color: string }) => (
+  <View style={styles.gridCard}>
+    <Text style={[styles.gridIcon, { color }]}>{icon}</Text>
+    <Text style={styles.gridTitulo}>{titulo}</Text>
+    <Text style={[styles.gridValor, { color }]}>{valor}</Text>
+  </View>
+);
+
+export default function InicioScreen() {
+  const [estado, setEstado] = useState("activo");
+
+  return (
+    <ScrollView
+      style={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.header}>
+        <Text style={styles.titulo}>🚀 DASHBOARD</Text>
+        <Text style={styles.subtitulo}>
+          Bienvenido a tu panel de control
+        </Text>
+      </View>
+
+      <LinearGradient
+        colors={[Colors.light.gradient1, Colors.light.gradient2]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.cardPrincipal}
+      >
+        <Text style={styles.cardTitulo}>Resumen Semanal</Text>
+        <Text style={styles.cardTexto}>
+          Tu desempeño está mejorando cada día. ¡Sigue así!
+        </Text>
+
+        <Pressable style={styles.botonSecundario}>
+          <Text style={styles.botonTexto}>Ver Detalles →</Text>
+        </Pressable>
+      </LinearGradient>
+
+      <View style={styles.estadoButtons}>
+        <Pressable
+          style={[
+            styles.estadoBtn,
+            estado === "activo"
+              ? styles.estadoActivo
+              : { backgroundColor: Colors.light.card },
+          ]}
+          onPress={() => setEstado("activo")}
+        >
+          <Text
+            style={{
+              color: estado === "activo" ? "#000" : Colors.light.text,
+              fontWeight: "bold",
+            }}
+          >
+            ✓ Activo
+          </Text>
+        </Pressable>
+
+        <Pressable
+          style={[
+            styles.estadoBtn,
+            estado === "pausa"
+              ? styles.estadoInactivo
+              : { backgroundColor: Colors.light.card },
+          ]}
+          onPress={() => setEstado("pausa")}
+        >
+          <Text
+            style={{
+              color: estado === "pausa" ? "#000" : Colors.light.text,
+              fontWeight: "bold",
+            }}
+          >
+            ⏸ Pausa
+          </Text>
+        </Pressable>
+      </View>
+
+      <View style={styles.gridContainer}>
+        <GridCard
+          icon="📊"
+          titulo="Ventas"
+          valor="+45%"
+          color={Colors.light.success}
+        />
+        <GridCard
+          icon="👥"
+          titulo="Clientes"
+          valor="234"
+          color={Colors.light.buttonSecondary}
+        />
+        <GridCard
+          icon="💰"
+          titulo="Ingresos"
+          valor="$45K"
+          color={Colors.light.warning}
+        />
+        <GridCard
+          icon="⭐"
+          titulo="Rating"
+          valor="4.8/5"
+          color={Colors.light.gradient1}
+        />
+      </View>
+    </ScrollView>
+  );
+}     
+
